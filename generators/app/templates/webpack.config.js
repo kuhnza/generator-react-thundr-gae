@@ -1,15 +1,12 @@
 const path = require('path');
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-module.exports = {
+// Environment flags
+const environment = process.env.NODE_ENV || 'development';
+const isDevelopment = environment === 'development';
+
+const webpackConfig = {
     entry: [
-        'react-hot-loader/patch', // activate HMR for React
-
-        'webpack-dev-server/client?http://localhost:3000',  // bundle the client for webpack-dev-serve
-
-        'webpack/hot/only-dev-server', // bundle the client for hot reloading
-
         './src/main/static/typescript/index.tsx'
     ],
 
@@ -32,13 +29,7 @@ module.exports = {
             'process.env': {
                 'NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
             }
-        }),
-
-        // Enable HMR globally
-        new webpack.HotModuleReplacementPlugin(),
-
-        // Prints more readable module names in the browser console on HMR updates
-        new webpack.NamedModulesPlugin()
+        })
     ],
 
     module: {
@@ -74,6 +65,15 @@ module.exports = {
                 ]
             },
 
+			// Image loading. Inlines small images as data URIs (i.e. < 10k).
+			{
+				test: /\.(png|jpg|jpeg|gif|svg)$/,
+				loader: 'url-loader',
+				options: {
+					limit: 10000
+				}
+			},
+
             // Inline small woff files and output them at fonts/.
             {
                 test: /\.woff2?$/,
@@ -95,16 +95,39 @@ module.exports = {
             }
         ]
     },
+};
 
-    devServer: {
+if (isDevelopment) {
+	webpackConfig.entry.unshift(
+		'react-hot-loader/patch', // activate HMR for React
+
+        'webpack-dev-server/client?http://localhost:3000',  // bundle the client for webpack-dev-serve
+
+        'webpack/hot/only-dev-server' // bundle the client for hot reloading
+	);
+
+	webpackConfig.plugins.push(
+		// Enable HMR globally
+        new webpack.HotModuleReplacementPlugin(),
+
+		// Prints more readable module names in the browser console on HMR updates
+		new webpack.NamedModulesPlugin()
+	);
+
+	webpackConfig.devServer = {
         port: 3000,
-
         contentBase: path.resolve(__dirname, 'src/main/webapp'),
-
         hot: true,
-
         proxy: {
             '/api': 'http://localhost:8080'
         }
-    }
-};
+    };
+} else {
+	webpackConfig.plugins.push(
+		// Minify JS in non-development environments
+		new webpack.optimize.UglifyJsPlugin()
+	);
+}
+
+
+module.exports = webpackConfig;
