@@ -7,7 +7,9 @@ const staticDir = path.resolve(__dirname, 'src/main/static');
 const environment = process.env.NODE_ENV || 'development';
 const isDevelopment = environment === 'development';
 
-
+/**
+ * Base Webpack configuration.
+ */
 const webpackConfig = {
     entry: [
         './src/main/static/typescript/index.tsx'
@@ -31,7 +33,8 @@ const webpackConfig = {
         new webpack.DefinePlugin({
             'process.env': {
                 'NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
-            }
+            },
+			'DEVELOPMENT': isDevelopment
         })
     ],
 
@@ -42,16 +45,6 @@ const webpackConfig = {
                 enforce: 'pre',
                 test: /\.js$/,
                 use: 'source-map-loader'
-            },
-
-            // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
-            {
-                test: /\.tsx?$/,
-                include: path.resolve(staticDir, 'typescript'),
-                use: [
-                    'react-hot-loader/webpack',
-                    'awesome-typescript-loader'
-                ]
             },
 
             // Load Less files
@@ -125,6 +118,18 @@ if (isDevelopment) {
 		new webpack.NamedModulesPlugin()
 	);
 
+	webpackConfig.module.rules.push(
+		// All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
+		{
+			test: /\.tsx?$/,
+			include: path.resolve(staticDir, 'typescript'),
+			use: [
+				'react-hot-loader/webpack',  // Enable HMR support in loader chain
+				'awesome-typescript-loader'
+			]
+		}
+	);
+
 	webpackConfig.devServer = {
         port: 3000,
         contentBase: path.resolve(__dirname, 'src/main/webapp'),
@@ -134,6 +139,17 @@ if (isDevelopment) {
         }
     };
 } else {
+	webpackConfig.module.rules.push(
+		// All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
+		{
+			test: /\.tsx?$/,
+			include: path.resolve(staticDir, 'typescript'),
+			use: [
+				'awesome-typescript-loader'
+			]
+		}
+	);
+
 	webpackConfig.plugins.push(
 		// Minify JS in non-development environments
 		new webpack.optimize.UglifyJsPlugin()
