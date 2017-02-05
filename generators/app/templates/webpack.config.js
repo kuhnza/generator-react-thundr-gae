@@ -1,9 +1,12 @@
 const path = require('path');
 const webpack = require('webpack');
 
+const staticDir = path.resolve(__dirname, 'src/main/static');
+
 // Environment flags
 const environment = process.env.NODE_ENV || 'development';
 const isDevelopment = environment === 'development';
+
 
 const webpackConfig = {
     entry: [
@@ -44,7 +47,7 @@ const webpackConfig = {
             // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
             {
                 test: /\.tsx?$/,
-                include: path.resolve(__dirname, 'src/main/static/typescript'),
+                include: path.resolve(staticDir, 'typescript'),
                 use: [
                     'react-hot-loader/webpack',
                     'awesome-typescript-loader'
@@ -55,12 +58,19 @@ const webpackConfig = {
             {
                 test: /\.less$/,
                 include: [
-                    path.resolve(__dirname, 'src/main/static/less'),
-                    path.resolve(__dirname, 'node_modules')
+                    path.resolve(staticDir, 'less')
                 ],
                 use: [
                     'style-loader',
                     { loader: 'css-loader', options: { sourceMap: true, importLoaders: 1 } },
+					{
+						loader: 'postcss-loader',
+						options: {
+							plugins: function () {
+								return [require('autoprefixer')];
+							}
+						}
+					},
                     { loader: 'less-loader', options: { sourceMap: true } }
                 ]
             },
@@ -70,6 +80,7 @@ const webpackConfig = {
 				test: /\.(png|jpg|jpeg|gif|svg)$/,
 				loader: 'url-loader',
 				options: {
+					name: 'images/[name].[hash].[ext]',
 					limit: 10000
 				}
 			},
@@ -128,6 +139,5 @@ if (isDevelopment) {
 		new webpack.optimize.UglifyJsPlugin()
 	);
 }
-
 
 module.exports = webpackConfig;

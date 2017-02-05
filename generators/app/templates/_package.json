@@ -15,11 +15,13 @@
     "@types/react-hot-loader": "^3.0.1",
     "@types/webpack": "^2.2.4",
     "@types/webpack-env": "^1.13.0",
+    "autoprefixer": "^6.7.2",
     "awesome-typescript-loader": "^3.0.0-beta.18",
     "css-loader": "^0.26.1",
     "file-loader": "^0.10.0",
     "less": "^2.7.2",
     "less-loader": "^2.2.3",
+    "postcss-loader": "^1.2.2",
     "react-hot-loader": "^3.0.0-beta.6",
     "source-map-loader": "^0.1.6",
     "style-loader": "^0.13.1",
@@ -38,4 +40,3 @@
     "node": ">=6.9.1"
   }
 }
-
