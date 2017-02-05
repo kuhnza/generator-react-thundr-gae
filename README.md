@@ -16,6 +16,20 @@ Then generate your new project:
 yo react-thundr-gae
 ```
 
+## To Do
+
+- [x] LESS
+- [x] Autoprefixer
+- [x] TypeScript
+- [x] Minification
+- [x] Hot Module Reloading
+- [ ] Add README doc to generated project
+- [ ] Generate favicon set
+- [ ] Compress images
+- [ ] Split vendor and application bundles and use chunkhash
+- [ ] Sample API endpoint
+- [ ] Sample frontend tests
+
 ## Getting To Know Yeoman
 
  * Yeoman has a heart of gold.
