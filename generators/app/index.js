@@ -89,8 +89,6 @@ module.exports = Generator.extend({
   },
 
   install: function () {
-    this.installDependencies({
-      bower: false
-    });
+    this.spawnCommand('mvn', ['install']);
   }
 });

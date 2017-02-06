@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "webpack",
+    "build": "npm install && webpack",
     "clean": "rm -rf src/main/webapp/static",
     "lint": "tslint -c tslint.json src/main/static/typescript/**/*.tsx",
     "start": "webpack-dev-server",
