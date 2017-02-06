@@ -46,6 +46,11 @@ module.exports = Generator.extend({
       this.destinationPath('package.json'),
       context
     );
+    this.fs.copyTpl(
+      this.templatePath('_webpack.config.js'),
+      this.destinationPath('webpack.config.js'),
+      context
+    );
 
     this.fs.copy(
       this.templatePath('editorconfig'),
@@ -58,10 +63,6 @@ module.exports = Generator.extend({
     this.fs.copy(
       this.templatePath('java-version'),
       this.destinationPath('.java-version')
-    );
-    this.fs.copy(
-      this.templatePath('webpack.config.js'),
-      this.destinationPath('webpack.config.js')
     );
     this.fs.copy(
       this.templatePath('tsconfig.json'),
@@ -88,6 +89,8 @@ module.exports = Generator.extend({
   },
 
   install: function () {
-    this.installDependencies();
+    this.installDependencies({
+      bower: false
+    });
   }
 });

@@ -24,7 +24,7 @@ yo react-thundr-gae
 - [x] Minification
 - [x] Hot Module Reloading
 - [ ] Add README doc to generated project
-- [ ] Generate favicon set
+- [x] Generate favicon set
 - [ ] Compress images
 - [ ] Split vendor and application bundles and use chunkhash
 - [ ] Sample API endpoint

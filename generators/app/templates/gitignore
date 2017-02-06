@@ -1,13 +1,10 @@
 src/main/webapp/static
-src/main/webapp/WEB-INF/tags/generated-css.html
-src/main/webapp/WEB-INF/tags/generated-js.html
+src/main/webapp/index.html
 target/
 classes/
 bin/
-bower_components/
 node_modules/
 test-output/
-typings/
 
 .classpath
 .settings
@@ -28,5 +25,6 @@ test-output
 *~
 hs_err*
 hotspot.log
+*.orig
 
 rebel.xml

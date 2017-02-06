@@ -1,7 +1,9 @@
 const path = require('path');
 const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 
-const staticDir = path.resolve(__dirname, 'src/main/static');
+const sourceDir = path.resolve(__dirname, 'src/main/static');
 
 // Environment flags
 const environment = process.env.NODE_ENV || 'development';
@@ -35,7 +37,31 @@ const webpackConfig = {
                 'NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
             },
 			'DEVELOPMENT': isDevelopment
-        })
+        }),
+
+		// Automatically generates index.html
+		new HtmlWebpackPlugin({
+			title: '<%= project %>',
+
+			template: path.resolve(sourceDir, 'index.ejs'),
+
+			filename: path.resolve(__dirname, 'src/main/webapp/index.html')
+		}),
+
+		new FaviconsWebpackPlugin({
+			// The source icon
+			logo: path.resolve(sourceDir, 'images/favicon/original.png'),
+
+			// The prefix for all image files (might be a folder or a name)
+    		prefix: 'images/favicon-[hash]/',
+
+			// Generate a cache file with control hashes and
+    		// don't rebuild the favicons until those hashes change
+    		persistentCache: true,
+
+			// Inject the html into the html-webpack-plugin
+    		inject: true
+		})
     ],
 
     module: {
@@ -51,7 +77,7 @@ const webpackConfig = {
             {
                 test: /\.less$/,
                 include: [
-                    path.resolve(staticDir, 'less')
+                    path.resolve(sourceDir, 'less')
                 ],
                 use: [
                     'style-loader',
@@ -122,7 +148,7 @@ if (isDevelopment) {
 		// All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
 		{
 			test: /\.tsx?$/,
-			include: path.resolve(staticDir, 'typescript'),
+			include: path.resolve(sourceDir, 'typescript'),
 			use: [
 				'react-hot-loader/webpack',  // Enable HMR support in loader chain
 				'awesome-typescript-loader'
@@ -143,7 +169,7 @@ if (isDevelopment) {
 		// All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
 		{
 			test: /\.tsx?$/,
-			include: path.resolve(staticDir, 'typescript'),
+			include: path.resolve(sourceDir, 'typescript'),
 			use: [
 				'awesome-typescript-loader'
 			]
