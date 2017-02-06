@@ -51,6 +51,11 @@ module.exports = Generator.extend({
       this.destinationPath('webpack.config.js'),
       context
     );
+    this.fs.copyTpl(
+      this.templatePath('_README.md'),
+      this.destinationPath('README.md'),
+      context
+    );
 
     this.fs.copy(
       this.templatePath('editorconfig'),

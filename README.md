@@ -23,7 +23,7 @@ yo react-thundr-gae
 - [x] TypeScript
 - [x] Minification
 - [x] Hot Module Reloading
-- [ ] Add README doc to generated project
+- [x] Add README doc to generated project
 - [x] Generate favicon set
 - [ ] Compress images
 - [ ] Split vendor and application bundles and use chunkhash
