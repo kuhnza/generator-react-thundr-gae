@@ -96,6 +96,8 @@ module.exports = Generator.extend({
   },
 
   install: function () {
-    this.spawnCommand('mvn', ['install']);
+    if (!this.options['skip-install']) {
+      this.spawnCommand('mvn', ['install']);
+    }
   }
 });
