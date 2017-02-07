@@ -1,4 +1,4 @@
-package threewks.controller;
+package controller;
 
 import com.threewks.thundr.route.Router;
 import com.threewks.thundr.route.staticResource.StaticResource;

@@ -1,12 +1,10 @@
-package threewks;
-
 import com.threewks.thundr.gae.GaeModule;
 import com.threewks.thundr.gae.objectify.ObjectifyModule;
 import com.threewks.thundr.injection.BaseModule;
 import com.threewks.thundr.injection.UpdatableInjectionContext;
 import com.threewks.thundr.module.DependencyRegistry;
 import com.threewks.thundr.route.Router;
-import threewks.controller.Routes;
+import controller.Routes;
 
 public class ApplicationModule extends BaseModule {
     @Override

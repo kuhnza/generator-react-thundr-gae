@@ -16,11 +16,13 @@ module.exports = Generator.extend({
     var prompts = [
       {
         name: 'project',
-        message: 'What is the name of this project?'
+        message: 'What is the name of this project?',
+        store: true
       },
       {
         name: 'gitPath',
-        message: 'What is the HTTPS git path for this project?'
+        message: 'What is the HTTPS git path for this project?',
+        store: true
       }
     ];
 
@@ -86,11 +88,11 @@ module.exports = Generator.extend({
       this.destinationPath('etc')
     );
 
-    mkdirp('src/test/java/');
-    mkdirp('src/test/java/');
     mkdirp('src/main/static/');
     mkdirp('src/main/static/fonts');
     mkdirp('src/main/static/images');
+    mkdirp('src/test/java/');
+    mkdirp('src/test/typescript/');
   },
 
   install: function () {
